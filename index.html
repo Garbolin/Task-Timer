@@ -1,55 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Timer</title>
-    <link rel="stylesheet" href="main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="icon" href="timer_114977.png">
-</head>
-<body>
-    <div id="app">
-        <header>
-            <h1>Task Timer</h1>
-            <h2>Indica el tiempo para tus tareas y agregalas para empezar a organizar tu día!</h2>
-        </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Task Timer</title>
+        <link rel="stylesheet" href="main.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="icon" href="timer_114977.png" />
+    </head>
+    <body>
+        <div id="app">
+            <header>
+                <h1>Task Timer</h1>
+                <h2>
+                    Indica el tiempo para tus tareas y agregalas para empezar a organizar tu día!
+                </h2>
+            </header>
 
-        <div class="taskTime">
-            
-        <p id="hour-label" class="label">Hours</p><p id="min-label" class="label">Minutes</p><p id="sec-label" class="label">Seconds</p>
+            <div class="taskTime">
+                <p id="hour-label" class="label">Hours</p>
+                <p id="min-label" class="label">Minutes</p>
+                <p id="sec-label" class="label">Seconds</p>
 
-        <input id="hours" type="number" max="99" min="0" value="0" class="time"><p id="p1" class="semicolon">:</p><input id="minutes" type="number" max="60" min="0" value="0" class="time"><p id="p2" class="semicolon">:</p><input id="seconds" type="number" max="60" min="0" value="0" class="time">
-            
-        </div>
-        <!-- HAY UN BUG EN TIME GOAL, CREO QUE ME HE EQUIBOCADO Y DEBERIA SALIR TOTALTIME EN VEZ DE TIME GOAL DONDE SALE TIEMPO TRABAJADO -->
-        <div id="time">
-            <div id="taskName"></div>
-            <div id="value"></div>
-            <div id="sumTime"></div>
-        </div>
-
-        <div class="tasks-container">
-            <div class="form">
-                <form action="" id="form">
-                    <input type="text" id="itTask" />
-                    <input type="submit" id="bAdd" value="Agregar Tarea" />
-                </form>
+                <input id="hours" type="number" max="99" min="0" value="0" class="time" />
+                <p id="p1" class="semicolon">:</p>
+                <input id="minutes" type="number" max="60" min="0" value="0" class="time" />
+                <p id="p2" class="semicolon">:</p>
+                <input id="seconds" type="number" max="60" min="0" value="0" class="time" />
             </div>
-            
-            <div id="tasks_header">
-                <p id="task_item_1" class="task_item">Task</p>
-                <p id="task_item_2" class="task_item">Time Spent</p>
-                <p id="task_item_3" class="task_item">Goal</p>
-                <p id="task_item_4" class="task_item">Options</p>
+            <!-- HAY UN BUG EN TIME GOAL, CREO QUE ME HE EQUIBOCADO Y DEBERIA SALIR TOTALTIME EN VEZ DE TIME GOAL DONDE SALE TIEMPO TRABAJADO -->
+            <div id="time">
+                <div id="taskName"></div>
+                <div id="value"></div>
+                <div id="sumTime"></div>
             </div>
 
-            <div id="tasks"></div>
-        </div>
+            <div class="tasks-container">
+                <div class="form">
+                    <form action="" id="form">
+                        <input type="text" id="itTask" />
+                        <input type="submit" id="bAdd" value="Agregar Tarea" />
+                    </form>
+                </div>
 
-    </div>
-    <script src="main.js"></script>
-</body>
+                <div id="tasks_header">
+                    <p id="task_item_1" class="task_item">Task</p>
+                    <p id="task_item_2" class="task_item">Time Spent</p>
+                    <p id="task_item_3" class="task_item">Goal</p>
+                    <p id="task_item_4" class="task_item">Options</p>
+                </div>
+
+                <div id="tasks"></div>
+            </div>
+        </div>
+        <script src="main.js"></script>
+    </body>
 </html>

@@ -5,25 +5,25 @@ let timer = null;
 let timerBreak = null;
 let current = null;
 
-const bAdd = document.querySelector("#bAdd");
-const itTask = document.querySelector("#itTask");
-const form = document.querySelector("#form");
+const bAdd = document.querySelector('#bAdd');
+const itTask = document.querySelector('#itTask');
+const form = document.querySelector('#form');
 const taskName = document.querySelector('#time #taskName');
 
-const hour = document.querySelector("#hours");
-const min = document.querySelector("#minutes");
-const sec = document.querySelector("#seconds")
+const hour = document.querySelector('#hours');
+const min = document.querySelector('#minutes');
+const sec = document.querySelector('#seconds');
 
 renderTime();
 renderTasks();
 
-form.addEventListener('submit', e => {
+form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if(itTask.value !== ''){
-        const selectedHour = parseInt(hour.value, 10) || 0;;
+    if (itTask.value !== '') {
+        const selectedHour = parseInt(hour.value, 10) || 0;
         const selectedMin = parseInt(min.value, 10) || 0;
         const selectedSec = parseInt(sec.value, 10) || 0;
-        const totalTime = (selectedHour * 3600) + (selectedMin * 60) + selectedSec;
+        const totalTime = selectedHour * 3600 + selectedMin * 60 + selectedSec;
         createTask(itTask.value, totalTime);
         itTask.value = '';
         hour.value = '0';
@@ -34,11 +34,11 @@ form.addEventListener('submit', e => {
     }
 });
 
-function createTask(value, totalTime){
+function createTask(value, totalTime) {
     const newTask = {
         id: (Math.random() * 100).toString(36).slice(3), //id dinamico
         title: value,
-        timeSpent: 0,// tiempo trabajado para esta tarea
+        timeSpent: 0, // tiempo trabajado para esta tarea
         timeGoal: totalTime,
         completed: false,
         //progression - barra de progreso
@@ -47,15 +47,14 @@ function createTask(value, totalTime){
     tasks.unshift(newTask);
 }
 
-
 function renderTaskButtons(task, current, timer) {
-    let buttonText = "Start";
+    let buttonText = 'Start';
     if (task.completed) {
         return `<span class="done">Done</span>`;
     } else if (task.id === current && timer) {
-        buttonText = "Stop";
+        buttonText = 'Stop';
     } else if (task.id === current && !timer) {
-        buttonText = "Continue";
+        buttonText = 'Continue';
     }
 
     return `
@@ -65,10 +64,8 @@ function renderTaskButtons(task, current, timer) {
     `;
 }
 
-
-
-function renderTasks(){
-    const html = tasks.map(task =>{
+function renderTasks() {
+    const html = tasks.map((task) => {
         return `
             <div class="task ${task.completed ? 'completed' : ''}">
                 <div id="title">${task.title}</div>
@@ -77,60 +74,63 @@ function renderTasks(){
 
                 <div class="buttons">${renderTaskButtons(task)}</div>
                 <div class="progress">
-                    <div class="progress_bar" style="width: ${calculateProgress(task.timeSpent, task.timeGoal)}%;"></div>
+                    <div class="progress_bar" style="width: ${calculateProgress(
+                        task.timeSpent,
+                        task.timeGoal
+                    )}%;"></div>
                 </div>
             </div>
         `;
     });
 
     const tasksContainer = document.querySelector('#tasks');
-    tasksContainer.innerHTML = html.join("");
+    tasksContainer.innerHTML = html.join('');
 
     const startButtons = document.querySelectorAll('.task .start-button');
-    startButtons.forEach(button => {
-        button.addEventListener('click', e => {
+    startButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
             const id = button.getAttribute('data-id');
-            if (button.textContent === "Start" && !timer) {
+            if (button.textContent === 'Start' && !timer) {
                 startButtonHandler(id);
-                
-                button.textContent = "Stop";
-            } else if (button.textContent === "Stop") {
+
+                button.textContent = 'Stop';
+            } else if (button.textContent === 'Stop') {
                 stopButtonHandler(id);
-                button.textContent = "Continue";
-            } else if (button.textContent === "Continue" && !timer) {
+                button.textContent = 'Continue';
+            } else if (button.textContent === 'Continue' && !timer) {
                 startButtonHandler(id);
-                button.textContent = "Stop";
+                button.textContent = 'Stop';
             }
         });
     });
-    
-    const doneButtons = document.querySelectorAll('.task .done-button');
-        doneButtons.forEach(button => {
-            button.addEventListener('click', e => {
-                const id = button.getAttribute('data-id');
-                markCompleted(id);
 
-                renderTasks();
-                renderTotalTimeWorked();
-            });
+    const doneButtons = document.querySelectorAll('.task .done-button');
+    doneButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const id = button.getAttribute('data-id');
+            markCompleted(id);
+
+            renderTasks();
+            renderTotalTimeWorked();
         });
+    });
 
     const deleteButtons = document.querySelectorAll('.task .delete-button');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', e => {
+    deleteButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
             const id = button.getAttribute('data-id');
             deleteTask(id);
             renderTasks();
             renderTotalTimeWorked();
         });
     });
-    
+
     renderTotalTimeWorked();
 }
 
 //HAY UN POCO DE BUG EN LOS BOTONES
 function startButtonHandler(id) {
-    const taskIndex = tasks.findIndex(task => task.id === id);
+    const taskIndex = tasks.findIndex((task) => task.id === id);
     time = tasks[taskIndex].time;
     current = id;
     taskName.textContent = tasks[taskIndex].title;
@@ -144,18 +144,15 @@ function stopButtonHandler(id) {
     clearInterval(timer);
     timer = null;
     current = null;
-    const taskIndex = tasks.findIndex(task => task.id === id);
+    const taskIndex = tasks.findIndex((task) => task.id === id);
     tasks[taskIndex].time = time; // Update the task's remaining time
     taskName.textContent = '';
     renderTasks();
     renderTotalTimeWorked();
 }
 
-
 function timeHandler(id) {
-    
-
-    const taskIndex = tasks.findIndex(task => task.id === id);
+    const taskIndex = tasks.findIndex((task) => task.id === id);
     tasks[taskIndex].timeSpent++;
     renderTime(tasks[taskIndex].timeSpent);
     renderTasks();
@@ -170,35 +167,34 @@ function timeHandler(id) {
         renderTotalTimeWorked();
     }
 
-
-
     // if(time === 0){
     //     clearInterval(timer);
     //     markCompleted(id);
     //     timer = null;
     //     renderTasks();
-        
+
     // }
 }
 
-
-function renderTime(totalSeconds){
+function renderTime(totalSeconds) {
     const timeDiv = document.querySelector('#time #value');
     const hours = parseInt(totalSeconds / 3600);
     const minutes = parseInt((totalSeconds % 3600) / 60);
     const seconds = parseInt(totalSeconds % 60);
 
-    timeDiv.textContent = `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    timeDiv.textContent = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${
+        seconds < 10 ? '0' : ''
+    }${seconds}`;
 }
 
 function formatTime(totalSeconds) {
     const hours = parseInt(totalSeconds / 3600);
     const minutes = parseInt((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    return `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
-function markCompleted(id){
+function markCompleted(id) {
     const taskIndex = tasks.findIndex((task) => task.id === id);
     tasks[taskIndex].completed = true;
 }
@@ -210,7 +206,7 @@ function renderTotalTimeWorked() {
 
     let totalSecondsTasks = 0;
 
-    tasks.forEach(task => {
+    tasks.forEach((task) => {
         if (typeof task.timeGoal === 'number' && !isNaN(task.timeGoal)) {
             totalSecondsTasks += task.timeGoal;
         }
@@ -219,14 +215,14 @@ function renderTotalTimeWorked() {
     const totalTimeTasks = formatTime(totalSecondsTasks);
 
     const sumTimeDiv = document.querySelector('#sumTime');
-    sumTimeDiv.innerHTML =  `Total del tiempo trabajado: ${totalTimeWorked} de <span>${totalTimeTasks}</span>`;
+    sumTimeDiv.innerHTML = `Total del tiempo trabajado: ${totalTimeWorked} de <span>${totalTimeTasks}</span>`;
 }
 
 function calculateProgress(timeSpent, timeGoal) {
     return (timeSpent / timeGoal) * 100;
 }
 
-function deleteTask(id){
-    const taskIndex = tasks.findIndex(task => task.id === id);
+function deleteTask(id) {
+    const taskIndex = tasks.findIndex((task) => task.id === id);
     tasks.splice(taskIndex, 1);
 }
