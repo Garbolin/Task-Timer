@@ -47,6 +47,7 @@ function createTask(value, totalTime) {
     tasks.unshift(newTask);
 }
 
+
 function renderTaskButtons(task) {
     let buttonText = '';
     if (task.id === current && timer) buttonText = 'Stop';
@@ -60,6 +61,7 @@ function renderTaskButtons(task) {
         <button class=" start-button" data-id="${task.id}">${buttonText}</button>
         <button class=" done-button" data-id="${task.id}">Done</button>
         <button class=" delete-button" data-id="${task.id}">Delete</button>
+
     `;
 }
 
@@ -75,9 +77,11 @@ function renderTasks() {
 
                 <div class="buttons">${renderTaskButtons(task, timer)}</div>
                 <div class="progress">
+
                     <div class="${
                         task.completed ? 'progress_completed' : 'progress_bar'
                     } " style="width: ${calculateProgress(task.timeSpent, task.timeGoal)}%;"></div>
+
                 </div>
             </div>
         `;
