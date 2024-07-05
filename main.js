@@ -47,37 +47,41 @@ function createTask(value, totalTime) {
     tasks.unshift(newTask);
 }
 
-function renderTaskButtons(task, current, timer) {
-    let buttonText = 'Start';
-    if (task.completed) {
-        return `<span class="done">Done</span>`;
-    } else if (task.id === current && timer) {
-        buttonText = 'Stop';
-    } else if (task.id === current && !timer) {
-        buttonText = 'Continue';
-    }
 
-    return `
-        <button class="start-button" data-id="${task.id}">${buttonText}</button>
-        <button class="done-button" data-id="${task.id}">Done</button>
-        <button class="delete-button" data-id="${task.id}">Delete</button>
+function renderTaskButtons(task) {
+    let buttonText = '';
+    if (task.id === current && timer) buttonText = 'Stop';
+    else if (task.id === current && !timer) buttonText = 'No deberia pasar';
+    else if (task.id !== current && task.timeSpent > 0) buttonText = 'Continue';
+    else buttonText = 'Start';
+
+    if (task.completed) return `<p>Done!</p>`;
+    else
+        return `
+        <button class=" start-button" data-id="${task.id}">${buttonText}</button>
+        <button class=" done-button" data-id="${task.id}">Done</button>
+        <button class=" delete-button" data-id="${task.id}">Delete</button>
+
     `;
 }
 
 function renderTasks() {
     const html = tasks.map((task) => {
         return `
-            <div class="task ${task.completed ? 'completed' : ''}">
+            <div class="task ${task.completed && 'completed'} ${
+            task.id === current && 'task-shadow'
+        }">
                 <div id="title">${task.title}</div>
                 <div id="timeSpent">${formatTime(task.timeSpent)}</div>
                 <div id="timeGoal">${formatTime(task.timeGoal)}</div>
 
-                <div class="buttons">${renderTaskButtons(task)}</div>
+                <div class="buttons">${renderTaskButtons(task, timer)}</div>
                 <div class="progress">
-                    <div class="progress_bar" style="width: ${calculateProgress(
-                        task.timeSpent,
-                        task.timeGoal
-                    )}%;"></div>
+
+                    <div class="${
+                        task.completed ? 'progress_completed' : 'progress_bar'
+                    } " style="width: ${calculateProgress(task.timeSpent, task.timeGoal)}%;"></div>
+
                 </div>
             </div>
         `;
